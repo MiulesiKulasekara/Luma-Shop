@@ -37,7 +37,7 @@ const AddProduct = () => {
       price: "",
       category: "",
       vendorId: user?.id,
-      isArchived: true,
+      isArchived: productListData?.isArchived ? 1 : 2,
       stockQuantity: "",
       dimensions: {
         width: 0,
@@ -47,18 +47,26 @@ const AddProduct = () => {
       material: "",
       colorOptions: [""],
       weight: 0,
-      assemblyRequired: true,
+      assemblyRequired: productListData?.assemblyRequired ? 1 : 2,
       productImages: [""],
       warrantyPeriod: 0,
-      isFeatured: true,
+      isFeatured: productListData?.isFeatured ? 1 : 2,
       listingId: "",
     },
 
     validationSchema: productvalidationSchema,
 
     onSubmit: async (values) => {
+      const payload = {
+        ...values,
+        colorOptions: values.colorOptions.split(','),
+        isArchived: values.isArchived === "1", // Convert 1 to true, 2 to false
+        isFeatured: values.isFeatured === "1", // Convert 1 to true, 2 to false
+        assemblyRequired: values.assemblyRequired === "1", // Convert 1 to true, 2 to false
+      };
+      console.log(payload)
       try {
-        await createProduct({ body: values }).unwrap();
+        await createProduct({ body: payload }).unwrap();
         console.log("Product created successfully");
         //console.log(values);
         resetForm();
@@ -463,8 +471,8 @@ const AddProduct = () => {
               onChange={handleChange}
               isFocused={isFocusStates.isArchived}
               options={[
-                { value: true, label: "Yes" },
-                { value: false, label: "No" },
+                { value: 1, label: "Yes" },
+                { value: 2, label: "No" },
               ]}
               error={touched.isArchived && errors.isArchived}
               errorMessage={errors.isArchived}
@@ -487,8 +495,8 @@ const AddProduct = () => {
               onChange={handleChange}
               isFocused={isFocusStates.isFeatured}
               options={[
-                { value: true, label: "Yes" },
-                { value: false, label: "No" },
+                { value: 1, label: "Yes" },
+                { value: 2, label: "No" },
               ]}
               error={touched.isFeatured && errors.isFeatured}
               errorMessage={errors.isFeatured}
@@ -511,8 +519,8 @@ const AddProduct = () => {
               onChange={handleChange}
               isFocused={isFocusStates.assemblyRequired}
               options={[
-                { value: true, label: "Yes" },
-                { value: false, label: "No" },
+                { value: 1, label: "Yes" },
+                { value: 2, label: "No" },
               ]}
               error={touched.assemblyRequired && errors.assemblyRequired}
               errorMessage={errors.assemblyRequired}

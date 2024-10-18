@@ -15,6 +15,7 @@ const FormInput = ({
   options,
   error,
   errorMessage,
+  disable=false
 }) => {
   const focusedStyle = {
     boxShadow: "0 0 0 0.2rem rgba(125, 157, 156, 0.5)",
@@ -46,6 +47,7 @@ const FormInput = ({
             style={inputStyle}
             rows={rows}
             as="textarea"
+            disabled={disable}
           />
         ) : type === "select" ? (
           <Input
@@ -58,6 +60,7 @@ const FormInput = ({
             onChange={onChange}
             error={error}
             style={inputStyle}
+            disabled={disable}
           >
             {options.map((option) => (
               <option key={option.value} value={option.value}>
@@ -77,6 +80,7 @@ const FormInput = ({
             placeholder={placeholder}
             error={error}
             style={inputStyle}
+            disabled={disable}
           />
         )}
       </FormGroup>

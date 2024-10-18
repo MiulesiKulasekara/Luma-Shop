@@ -34,16 +34,20 @@ export const UpdateProductList = () => {
         name: productListData?.name || "",
         description: productListData?.description || "",
         vendorId: productListData?.vendorId || "",
-        isActive: false,
+        isActive: productListData?.isActive ? 1 : 2,
       },
 
       validationSchema: updateproductListvalidationSchema,
 
       onSubmit: async (values) => {
+        const payload = {
+          ...values,
+          isActive: values.isActive === "1", // Convert 1 to true, 2 to false
+        };
         try {
           const respone = await updateProductList({
             productListingId: productListingId,
-            body: values,
+            body: payload,
           }).unwrap();
           console.log(respone);
         } catch (error) {
@@ -93,6 +97,7 @@ export const UpdateProductList = () => {
               placeholder="Enter Name"
               error={touched.name && errors.name}
               errorMessage={errors.name}
+              disable={userData?.role === 1}
             />
           </Col>
         </Row>
@@ -115,8 +120,8 @@ export const UpdateProductList = () => {
                 onChange={handleChange}
                 isFocused={isFocusStates.isActive}
                 options={[
-                  { value: true, label: "Active" },
-                  { value: false, label: "Deactive" },
+                  { value: 1, label: "Active" },
+                  { value: 2, label: "Deactive" },
                 ]}
                 error={touched.isActive && errors.isActive}
                 errorMessage={errors.isActive}
@@ -140,6 +145,7 @@ export const UpdateProductList = () => {
                 onChange={handleChange}
                 isFocused={isFocusStates.vendorId}
                 placeholder="Enter Vendor"
+                disable={true}
                 error={touched.vendorId && errors.vendorId}
                 errorMessage={errors.vendorId}
               />
@@ -165,6 +171,7 @@ export const UpdateProductList = () => {
               isFocused={isFocusStates.description}
               placeholder="Enter Description"
               rows={5}
+              disable={userData?.role === 1}
               error={touched.description && errors.description}
               errorMessage={errors.companyName}
             />

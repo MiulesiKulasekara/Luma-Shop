@@ -10,6 +10,7 @@ import {
   useGetProductsByIdQuery,
   useUpdateProductMutation,
 } from "../../core/services/product/product";
+import { useGetAllProductListingsQuery } from "../../core/services/productListing/productListing";
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -17,6 +18,8 @@ const UpdateProduct = () => {
 
   const { data: productData } = useGetProductsByIdQuery({ productId });
   const [updateProductById] = useUpdateProductMutation();
+
+  const { data: productListData } = useGetAllProductListingsQuery();
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -106,21 +109,23 @@ const UpdateProduct = () => {
   };
 
   //list options
-  const transformedOptions = productList
-    .filter((product) => product.isActive)
-    .map((product) => ({
-      value: product.id,
-      label: product.name,
-    }));
+  const transformedOptions = productListData
+    ? productListData
+        .filter((productListData) => productListData.isActive)
+        .map((product) => ({
+          value: product.id,
+          label: product.name,
+        }))
+    : [];
 
   const transformedCategories = furnitureCategories.map((category) => ({
-    value: category.id,
+    value: category.name,
     label: category.name,
   }));
 
   return (
     <div className="p-4">
-      <h3 className="mb-4">Update Product - {productData.name}</h3>
+      <h3 className="mb-4">Update Product - {productData?.name}</h3>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>

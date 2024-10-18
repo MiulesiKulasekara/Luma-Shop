@@ -6,7 +6,10 @@ import TablePagination from "../../componets/TablePagination";
 import FormButton from "../../componets/FormButton";
 import { RowsPerPageEnum, UserRoleEnum } from "../../enums/Enum";
 import { useGetUserByIdQuery } from "../../core/services/user/user";
-import { useGetAllProductsQuery } from "../../core/services/product/product";
+import {
+  useGetAllProductsQuery,
+  useDeleteProductMutation,
+} from "../../core/services/product/product";
 import { useCookies } from "react-cookie";
 
 const ProductList = () => {
@@ -19,6 +22,9 @@ const ProductList = () => {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [paginatedProduct, setPaginatedProduct] = useState([]);
+
+  //Delete data
+  const [deleteProduct] = useDeleteProductMutation();
 
   const rowsPerPage = RowsPerPageEnum.MAX_TABLE_ROWS;
 
@@ -47,6 +53,26 @@ const ProductList = () => {
   //     : paginatedProduct;
 
   /********************************************************************************/
+
+  //Delete product
+  const handleDeleteProduct = async (productId) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (isConfirmed) {
+      try {
+        await deleteProduct({ productId: productId });
+        {
+          isSuccessDelete && (
+            <span style={{ color: "green" }}>User deleted successfully!</span>
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   // Display loading, error, and empty states
   if (isLoading) {
     return (
@@ -130,7 +156,7 @@ const ProductList = () => {
                       </Link>
                     )}{" "}
                     {data?.role === UserRoleEnum.VENDOR && (
-                      <Button variant="outline-danger" size="sm">
+                      <Button variant="outline-danger" size="sm" onClick={() => handleDeleteProduct(product?.id)}>
                         <i className="bi bi-trash3"></i>
                       </Button>
                     )}
