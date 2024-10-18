@@ -1,0 +1,20 @@
+/* Change the color of pagination items */
+.pagination .page-link {
+  color: green; /* Set the text color to green */
+}
+
+/* Change the background color of the active pagination item */
+.pagination .page-item.active .page-link {
+  background-color: green; /* Active item background */
+  border-color: green;      /* Active item border */
+}
+
+/* Change the hover state for pagination items */
+.pagination .page-link:hover {
+  color: darkgreen; /* Hover text color */
+}
+
+/* Optional: Change disabled pagination arrow color */
+.pagination .page-item.disabled .page-link {
+  color: lightgreen; /* Disabled arrow color */
+}

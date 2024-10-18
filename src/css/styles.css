@@ -1,0 +1,76 @@
+.header-logo {
+    width: 200px;
+    height: auto;
+}
+
+.admin-header {
+    background-color: #576F72;
+}
+
+.header-rounded-circle {
+    width: 100px;
+}
+
+.admin-side-bar {
+    width: 220px;
+}
+
+.sidebar-item-bg {
+    background-color: #576F72;
+}
+
+.side-bar-item-txt {
+    color: white;
+    font-weight: 700;
+}
+
+.side-bar-item-txt-none {
+    color: #576F72;
+    font-weight: 500;
+}
+
+/* Table */
+.table-cell {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
+
+.pagination .page-link {
+    color: #576F72;
+}
+
+
+.pagination .page-item.active .page-link {
+    background-color: #576F72;
+    border-color: #576F72;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #576F72;
+}
+
+/* Star ratings */
+.star-rating {
+    display: flex;
+    font-size: 2rem;
+  }
+  
+  .star {
+    color: lightgray;
+  }
+  
+  .star.filled {
+    color: gold;
+  }
+
+
+  .global-spinner{
+    width: 100vw;
+    height: 100vh;
+    background-color: #576f72c7;
+  }

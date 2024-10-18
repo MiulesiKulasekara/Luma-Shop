@@ -1,0 +1,62 @@
+/* admin-signin */
+
+.login-page {
+  background-image: url('../assets/images/bg/adminbg.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-guide {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.login-forgotpwd {
+  color: #576F72;
+  font-weight: 500;
+  font-size: small;
+}
+
+.login-register {
+  color: #576F72;
+  font-weight: 500;
+  font-size: small;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+a {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* admin register */
+
+.register-page {
+  background-image: url('../assets/images/bg/adminbg1.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
