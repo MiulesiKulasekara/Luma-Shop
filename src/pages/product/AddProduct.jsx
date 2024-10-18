@@ -529,6 +529,11 @@ const AddProduct = () => {
         </Row>
         <FormButton className="mt-2" text="Add a Product" type="submit" />
       </Form>
+
+      {isError && <span style={{ color: "red" }}>Error creating product</span>}
+      {isSuccess && (
+        <span style={{ color: "green" }}>Product created successfully!</span>
+      )}
     </div>
   );
 };

@@ -17,7 +17,7 @@ const UpdateProduct = () => {
   const productId = id;
 
   const { data: productData } = useGetProductsByIdQuery({ productId });
-  const [updateProductById] = useUpdateProductMutation();
+  const [updateProductById , { isLoading, isError, isSuccess }] = useUpdateProductMutation();
 
   const { data: productListData } = useGetAllProductListingsQuery();
 
@@ -514,6 +514,11 @@ const UpdateProduct = () => {
         </Row>
         <FormButton className="mt-2" text="Update Product" type="submit" />
       </Form>
+
+      {isError && <p>Error updating product</p>}
+      {isSuccess && (
+        <span style={{ color: "green" }}>Product updated successfully!</span>
+      )}
     </div>
   );
 };
