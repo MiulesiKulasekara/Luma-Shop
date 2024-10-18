@@ -122,7 +122,7 @@ const AllProductList = () => {
               <tr>
                 <th>No.</th>
                 <th>Name</th>
-                {data?.role !== UserRoleEnum.VENDOR && <th>Vendor</th>}
+                {/* {data?.role !== UserRoleEnum.VENDOR && <th>Vendor</th>} */}
                 <th>Status</th>
                 <th>Description</th>
                 <th>Edit</th>
@@ -133,11 +133,11 @@ const AllProductList = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td className="table-cell">{product.name}</td>
-                  {data?.role !== UserRoleEnum.VENDOR && (
+                  {/* {data?.role !== UserRoleEnum.VENDOR && (
                     <td className="table-cell">
                       {product.vendorId.companyName}
                     </td>
-                  )}
+                  )} */}
                   <td className="table-cell">
                     {product.isActive === true ? "Active" : "Deactive"}
                   </td>

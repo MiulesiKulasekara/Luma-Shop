@@ -26,16 +26,40 @@ export const orderApi = createApi({
       transformResponse: (response) => response?.data,
     }),
 
+    // updateOrder: builder.mutation({
+    //   query: ({ productId, body }) => ({
+    //     url: `/order/${productId}`,
+    //     method: "PATCH",
+    //     body: body,
+    //   }),
+    //   invalidatesTags: ["Order"],
+    //   transformResponse: (response) => response?.data,
+    // }),
+
     updateOrder: builder.mutation({
-      query: ({ productId, body }) => ({
-        url: `/order/${productId}`,
+      query: ({ orderId, body }) => ({
+        url: `/order/${orderId}`,
         method: "PATCH",
         body: body,
       }),
       invalidatesTags: ["Order"],
       transformResponse: (response) => response?.data,
     }),
+
+    getOrdersById: builder.query({
+      query: ({ orderId }) => ({
+        url: `/order/${orderId}`,
+        method: "GET",
+      }),
+
+      transformResponse: (response) => response?.data,
+    }),
   }),
 });
 
-export const { useGetUserOrdersQuery, useGetAllOrderQuery, useUpdateOrderMutation } = orderApi;
+export const {
+  useGetUserOrdersQuery,
+  useGetAllOrderQuery,
+  useUpdateOrderMutation,
+  useGetOrdersByIdQuery,
+} = orderApi;

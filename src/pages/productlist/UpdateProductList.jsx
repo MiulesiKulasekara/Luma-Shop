@@ -128,7 +128,7 @@ export const UpdateProductList = () => {
               />
             </Col>
 
-            <Col>
+            {/* <Col>
               <FormInput
                 label="Verdor"
                 id="vendorId"
@@ -149,7 +149,7 @@ export const UpdateProductList = () => {
                 error={touched.vendorId && errors.vendorId}
                 errorMessage={errors.vendorId}
               />
-            </Col>
+            </Col> */}
           </Row>
         ) : null}
         <Row>

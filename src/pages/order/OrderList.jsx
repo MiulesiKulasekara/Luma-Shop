@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Button, Table } from "react-bootstrap";
 import OrderDetails from "./OrderDetails";
@@ -13,15 +13,30 @@ import {
   CompletedStatus,
 } from "../../componets/OrderStatus";
 import { OrderStatusEnum, RowsPerPageEnum } from "../../enums/Enum";
+import { useGetAllOrderQuery } from "../../core/services/order/order";
+import { useGetUserByIdQuery } from "../../core/services/user/user";
 
 export const OrderList = () => {
+  //Get all data
+  const { data: order, isLoading, isError } = useGetAllOrderQuery();
+  //console.log(order);
+
+  //Get user data
+  //const { data: userData } = useGetUserByIdQuery({ userId: order.customerId });
+
   const [selectedOrder, setSelectedOrder] = useState(null); // Store selected order for OrderDetails
   const [selectedUpdateOrder, setSelectedUpdateOrder] = useState(null); // Store selected order for UpdateOrder
-  const [paginatedOrder, setPaginatedOrder] = useState(
-    orders.slice(0, RowsPerPageEnum.MAX_TABLE_ROWS)
-  );
+  const [paginatedOrder, setPaginatedOrder] = useState([]);
 
   const rowsPerPage = RowsPerPageEnum.MAX_TABLE_ROWS;
+
+  //Arrange data for table
+  useEffect(() => {
+    if (order && order.length > 0) {
+      const initialPageData = order.slice(0, rowsPerPage);
+      setPaginatedOrder(initialPageData);
+    }
+  }, [order, rowsPerPage]);
 
   const handleRowClick = (order) => {
     if (selectedOrder && selectedOrder.id === order.id) {
@@ -64,18 +79,18 @@ export const OrderList = () => {
           <Table>
             <thead>
               <tr>
-                <th>No.</th>
-                <th>customer</th>
+                <th>Order number</th>
+                {/* <th>customer</th> */}
                 <th>Total Amount</th>
                 <th>Status</th>
                 <th>Edit</th>
               </tr>
             </thead>
             <tbody>
-              {paginatedOrder.map((order) => (
-                <tr key={order.id}>
+              {paginatedOrder.map((order,index) => (
+                <tr key={index+1}>
                   <td>{order.id}</td>
-                  <td className="table-cell">{order.customerId}</td>
+                  {/* <td className="table-cell">{order.customerId}</td> */}
                   <td className="table-cell">{order.totalAmount}</td>
                   <td className="table-cell">
                     {order.status === OrderStatusEnum.PENDING && (
@@ -96,7 +111,7 @@ export const OrderList = () => {
                     )}
                   </td>
                   <td>
-                  <Button
+                    <Button
                       variant="outline-primary"
                       size="sm"
                       onClick={() => handleRowClick(order)}

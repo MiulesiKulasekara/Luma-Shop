@@ -74,14 +74,13 @@ const UpdateUser = ({ user }) => {
           navigate("/admin/users");
 
           // EmailJS configuration
-          /*
+
           const serviceId = "service_6l8fxvq";
           const templateId = "template_nvhhuco";
           const publicKey = "SFXsEsLqyL2KzUpt9";
-          */
 
           // Determine the status text based on the numeric value
-          /*
+
           let statusNew;
           if (Number(values.status) === UserStatusEnum.PENDING) {
             statusNew = "Pending";
@@ -108,7 +107,6 @@ const UpdateUser = ({ user }) => {
             .catch((error) => {
               console.error("Error sending email:", error);
             });
-            */
         } catch (error) {
           console.log(error);
         }
