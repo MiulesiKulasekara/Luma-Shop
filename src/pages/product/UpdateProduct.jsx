@@ -68,7 +68,6 @@ const UpdateProduct = () => {
     price: false,
     category: false,
     vendorId: false,
-    isArchived: true,
     stockQuantity: false,
     dimensions: {
       width: 0,
