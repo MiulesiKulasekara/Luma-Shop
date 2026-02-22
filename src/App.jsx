@@ -47,12 +47,21 @@ import "./css/styles.css";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 
 import { UserRoleEnum } from "./enums/Enum";
+import { useEffect } from "react";
+import { requestForToken } from "./core/services/firebase/firebase";
 
 function App() {
   // const [cookies] = useCookies(["USER_ID"]);
   // const userId = cookies.USER_ID || "";
   // const { data } = useGetUserByIdQuery({ userId: userId });
   //console.log("Role :", data?.role);
+
+  useEffect(() => {
+    const generateToken = async () => {
+      await requestForToken();
+    };
+    generateToken();
+  },[]);
 
   return (
     <BrowserRouter>
@@ -63,11 +72,7 @@ function App() {
         <Route
           element={
             <ProtectedRoute
-              allowedRoles={[
-                UserRoleEnum.ADMIN,
-                UserRoleEnum.CSR,
-                UserRoleEnum.VENDOR,
-              ]}
+              allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR, UserRoleEnum.VENDOR]}
             />
           }
         >
@@ -77,7 +82,8 @@ function App() {
             {/* ******************************************************************************************** */}
             {/* user management */}
             <Route
-              element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR]}/>}>
+              element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR]} />}
+            >
               <Route path="users" element={<UserList />}></Route>
               <Route path="users/roles" element={<SelectRoles />}></Route>
               <Route path="users/update/:id" element={<UpdateUser />}></Route>
@@ -89,44 +95,61 @@ function App() {
 
             {/* ******************************************************************************************** */}
             {/* product list management */}
-            <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN,UserRoleEnum.CSR,UserRoleEnum.VENDOR]} />}>
-            <Route path="product/list" element={<AllProductList />}></Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR, UserRoleEnum.VENDOR]}
+                />
+              }
+            >
+              <Route path="product/list" element={<AllProductList />}></Route>
             </Route>
             <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.VENDOR]} />}>
-            <Route path="product/list/add" element={<AddProductList />}></Route>
+              <Route path="product/list/add" element={<AddProductList />}></Route>
             </Route>
-            <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN,UserRoleEnum.VENDOR]} />}>
-            <Route path="product/list/update/:id" element={<UpdateProductList />}></Route>
+            <Route
+              element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.VENDOR]} />}
+            >
+              <Route path="product/list/update/:id" element={<UpdateProductList />}></Route>
             </Route>
             {/* ******************************************************************************************** */}
 
             {/* ******************************************************************************************** */}
             {/* product management */}
-            <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN,UserRoleEnum.CSR,UserRoleEnum.VENDOR]} />}>
-            <Route path="product" element={<ProductList />}></Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR, UserRoleEnum.VENDOR]}
+                />
+              }
+            >
+              <Route path="product" element={<ProductList />}></Route>
             </Route>
             <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.VENDOR]} />}>
-            <Route path="product/add" element={<AddProduct />}></Route>
+              <Route path="product/add" element={<AddProduct />}></Route>
             </Route>
             <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.VENDOR]} />}>
-            <Route path="product/update/:id" element={<UpdateProduct />}></Route>
+              <Route path="product/update/:id" element={<UpdateProduct />}></Route>
             </Route>
             {/* ******************************************************************************************** */}
 
             {/* order management */}
             {/* ******************************************************************************************** */}
-            <Route element={<ProtectedRoute allowedRoles={[UserRoleEnum.ADMIN,UserRoleEnum.CSR,UserRoleEnum.VENDOR]} />}>
-            <Route path="order" element={<OrderList />}></Route>
+            <Route
+              element={
+                <ProtectedRoute
+                  allowedRoles={[UserRoleEnum.ADMIN, UserRoleEnum.CSR, UserRoleEnum.VENDOR]}
+                />
+              }
+            >
+              <Route path="order" element={<OrderList />}></Route>
             </Route>
             <Route path="order/update/:id" element={<UpdateOrder />}></Route>
             {/* ******************************************************************************************** */}
 
             {/* vendor ratings management */}
             {/* ******************************************************************************************** */}
-            <Route
-              path="vendor/ratings"
-              element={<VendorRatingsList />}
-            ></Route>
+            <Route path="vendor/ratings" element={<VendorRatingsList />}></Route>
             {/* ******************************************************************************************** */}
           </Route>
         </Route>

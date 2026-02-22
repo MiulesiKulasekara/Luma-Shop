@@ -5,23 +5,14 @@ const messaging = getMessaging(app);
 
 // Function to request permission and get the FCM token
 export const requestForToken = async () => {
-  try {
-    const currentToken = await getToken(messaging, { vapidKey: 'BNMBYd92VFKDW_0t2xN4KWOOigoI191mdOim3WMsgAdmLHMYpvKMt03OhOrxur8ao31E9-ZmeFgQiYKvqxxOvCU' });
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    const currentToken = await getToken(messaging, {
+      vapidKey:
+        "FILL_CORRECT_DETAILS",
+    });
     if (currentToken) {
-      console.log('current token for client: ', currentToken);
-      // Send this token to your server
-    } else {
-      console.log('No registration token available. Request permission to generate one.');
+      document.cookie = `FCM_TOKEN=${currentToken}; path=/; max-age=31536000; Secure; SameSite=Strict`;
     }
-  } catch (err) {
-    console.log('An error occurred while retrieving token. ', err);
   }
 };
-
-// Function to handle incoming messages
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
-});

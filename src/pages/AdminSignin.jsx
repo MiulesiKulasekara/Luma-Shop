@@ -9,12 +9,11 @@ import { useLoginUserMutation } from "../core/services/auth/auth";
 import "../css/admin-auth.css";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { requestForToken } from "../core/services/firebase/firebase";
 
 const AdminSignin = () => {
   const [loginService] = useLoginUserMutation();
   const navigate = useNavigate()
-  const [cookies, setCookie] = useCookies(["AUTH_TOKEN_KEY", "USER_ID"]);
+  const [cookies, setCookie] = useCookies(["AUTH_TOKEN_KEY", "USER_ID","FCM_TOKEN"]);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: {
@@ -29,6 +28,7 @@ const AdminSignin = () => {
         const payload = {
           email: values.email,
           password: values.password,
+          notificationTargetKey : cookies?.FCM_TOKEN ?? null
         };
         const result = await loginService({ body: payload }).unwrap();
 
@@ -76,7 +76,6 @@ const AdminSignin = () => {
           <Col md={6}></Col>
           <Col md={4} className="login-form">
             <h2>Admin Portal</h2>
-            <button onClick={()=>requestForToken()}>firebase</button>
             <p className="login-guide">Please login with your email address and password</p>
 
             <Form onSubmit={handleSubmit}>
